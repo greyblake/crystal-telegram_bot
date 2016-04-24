@@ -1,6 +1,6 @@
-# telegram_bot
+# Telegram Bot
 
-TODO: Write a description here
+Crystal client for [Telegram's Bot API](https://core.telegram.org/bots).
 
 ## Installation
 
@@ -13,28 +13,23 @@ dependencies:
     github: greyblake/telegram_bot
 ```
 
-
 ## Usage
 
+The library is still in development, but you can already access basic features.
 
 ```crystal
 require "telegram_bot"
+
+TOKEN = "Token-that-Botfather-gave-you"
+
+TelegramBot::Bot.new(TOKEN).run do |message|
+  message.reply("Stop sending me '#{message.text}'!")
+end
 ```
 
+## License
 
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/greyblake/telegram_bot/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create a new Pull Request
+The library is available as open source under the terms of the MIT License.
 
 ## Contributors
 

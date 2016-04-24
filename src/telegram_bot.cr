@@ -1,5 +1,9 @@
-require "./telegram_bot/*"
+require "http/client"
+require "json"
+require "colorize"
+
+
+require "./telegram_bot/**"
 
 module TelegramBot
-  # TODO Put your code here
 end
