@@ -66,14 +66,18 @@ module TelegramBot
 
     def run
       loop do
-        updates = client.get_updates(offset: @offset)
-        @offset = updates.last.update_id + 1 if updates.size > 0
-        updates.each do |update|
-          if update.message
-            bot_message = BotMessage.new(client, update.message as Message)
-            log(bot_message)
-            yield(bot_message)
+        begin
+          updates = client.get_updates(offset: @offset)
+          @offset = updates.last.update_id + 1 if updates.size > 0
+          updates.each do |update|
+            if update.message
+              bot_message = BotMessage.new(client, update.message as Message)
+              log(bot_message)
+              yield(bot_message)
+            end
           end
+        rescue err
+          log_error(err)
         end
         sleep 0.5
       end
@@ -88,6 +92,13 @@ module TelegramBot
 
       text = bot_message.text
       puts "#{time_part} #{username_part} #{direction} : #{text}"
+    end
+
+    def log_error(err)
+      time = Time.now.to_s("%Y-%m-%d %H:%M:%S")
+      time_part = "[#{time}]".colorize(:blue)
+      error = "ERROR: <#{err.class}>: #{err.message}".colorize(:red)
+      puts "#{time_part} #{error}"
     end
   end
 end

@@ -1,9 +1,12 @@
 module TelegramBot
   class Client
-    API_URL = "https://api.telegram.org"
+    HOST = "api.telegram.org"
+    TIMEOUT = 3
 
     def initialize(token)
       @token = token
+      @http_client = HTTP::Client.new(HOST, ssl: true)
+      @http_client.connect_timeout = TIMEOUT
     end
 
     def get_me : User
@@ -22,17 +25,18 @@ module TelegramBot
       response.result
     end
 
-    def send_message(chat_id, text, disable_web_page_preview = false, reply_to_message_id = nil, reply_markup = nil)
+    def send_message(chat_id, text)
       http_response = call("sendMessage", {
          "chat_id" => chat_id.to_s,
-         "text" => text
+         "text" => text,
+         "parse_mode" => "HTML"
       })
       JSON.parse(http_response.body)
     end
 
     private def call(method_name, params = {} of String => String) : HTTP::Client::Response
-      url = "#{API_URL}/bot#{@token}/#{method_name}"
-      HTTP::Client.post_form(url, params)
+      path = "/bot#{@token}/#{method_name}"
+      @http_client.post_form(path, params)
     end
   end
 end
