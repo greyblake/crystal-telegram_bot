@@ -3,7 +3,7 @@ module TelegramBot
     HOST = "api.telegram.org"
     TIMEOUT = 3
 
-    def initialize(token)
+    def initialize(token : String)
       @token = token
       @http_client = HTTP::Client.new(HOST, ssl: true)
       @http_client.connect_timeout = TIMEOUT
