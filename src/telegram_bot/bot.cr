@@ -3,7 +3,7 @@ module TelegramBot
     property :client
     property :message
 
-    def initialize(client, message)
+    def initialize(client : Client, message : TelegramBot::Message)
       @client = client
       @message = message
     end
@@ -56,12 +56,12 @@ module TelegramBot
 
     def initialize(client : Client)
       @client = client
-      @offset = 0
+      @offset = 0_u64
     end
 
     def initialize(token : String)
       @client = Client.new(token)
-      @offset = 0
+      @offset = 0_u64
     end
 
     def run
