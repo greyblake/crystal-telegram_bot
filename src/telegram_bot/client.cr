@@ -5,7 +5,7 @@ module TelegramBot
 
     def initialize(token : String)
       @token = token
-      @http_client = HTTP::Client.new(HOST, ssl: true)
+      @http_client = HTTP::Client.new(HOST, tls: true)
       @http_client.connect_timeout = TIMEOUT
     end
 
